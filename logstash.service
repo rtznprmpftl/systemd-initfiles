@@ -1,0 +1,19 @@
+#This initfile is for logstash ( http://logstash.net/ )
+# you might want to adjust the name of the configfile (and/or the path) and the memory settings
+
+
+[Unit]
+Description=Logstash
+BindTo=network.target
+Requires=elasticsearch.service
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+WorkingDirectory=/opt/logstash
+User=logstash
+Group=logstash
+Type=simple
+ExecStart=/bin/java -Xmx64M -Xms32M -jar logstash.jar agent -f settings.conf
+
