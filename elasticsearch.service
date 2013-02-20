@@ -1,0 +1,18 @@
+#This init file is for elasticsearch ( http://www.elasticsearch.org/ )
+# it is tested with version 0.20.5
+# you should create the file /etc/sysconfig/elasticsearch to set the enviroment variables for elasticsearch (especially memory) 
+
+[Unit]
+Description=elasticsearch
+BindTo=network.target
+Requires=syslog.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+EnvironmentFile=/etc/sysconfig/elasticsearch
+User=elasticsearch
+Group=elasticsearch
+Type=simple
+ExecStart=/opt/elasticsearch/bin/elasticsearch -f

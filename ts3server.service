@@ -1,0 +1,24 @@
+# This is an init script for The Teamspeak 3 Server ( http://teamspeak.com )
+# I also added a check for the sqlite database at start and a vacuum command at the stopping of the server
+# At the moment the output of the sqlite commands are ignored (the dash before the slash) because otherwise the start would fail
+# So: use them on your own risk until i fix this flaw
+
+[Unit]
+Description=TeamSpeak 3 Server
+After=network.target
+
+[Service]
+WorkingDirectory=/opt/ts3/teamspeak3-server_linux-amd64
+User=teamspeak
+Group=teamspeak
+Type=forking
+ExecStartPre=-/bin/sqlite3 -line /opt/ts3/teamspeak3-server_linux-amd64/ts3server.sqlitedb 'pragma integrity_check;'
+ExecStartPre=-/bin/sqlite3 -line /opt/ts3/teamspeak3-server_linux-amd64/ts3server.sqlitedb 'vacuum;'
+ExecStart=/opt/ts3/teamspeak3-server_linux-amd64/ts3server_startscript.sh start inifile=ts3server.ini
+ExecStop=/opt/ts3/teamspeak3-server_linux-amd64/ts3server_startscript.sh stop
+PIDFile=/opt/ts3/teamspeak3-server_linux-amd64/ts3server.pid
+RestartSec=15
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
