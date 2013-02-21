@@ -1,0 +1,15 @@
+# This is an init script for tinc ( http://www.tinc-vpn.org/ )
+# It connects to the tunnel wormhole
+
+[Unit]
+Description=tinc-wormhole
+After=network.target
+
+[Service]
+Type=forking
+ExecStart=/sbin/tincd -n wormhole
+ExecStop=/sbin/tincd -n wormhole -k
+
+[Install]
+WantedBy=multi-user.target
+
