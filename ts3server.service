@@ -13,7 +13,7 @@ User=teamspeak
 Group=teamspeak
 Type=forking
 ExecStartPre=-/bin/sqlite3 -line /opt/ts3/teamspeak3-server_linux-amd64/ts3server.sqlitedb 'pragma integrity_check;'
-ExecStartPre=-/bin/sqlite3 -line /opt/ts3/teamspeak3-server_linux-amd64/ts3server.sqlitedb 'vacuum;'
+ExecStartPost=-/bin/sqlite3 -line /opt/ts3/teamspeak3-server_linux-amd64/ts3server.sqlitedb 'vacuum;'
 ExecStart=/opt/ts3/teamspeak3-server_linux-amd64/ts3server_startscript.sh start inifile=ts3server.ini
 ExecStop=/opt/ts3/teamspeak3-server_linux-amd64/ts3server_startscript.sh stop
 PIDFile=/opt/ts3/teamspeak3-server_linux-amd64/ts3server.pid
